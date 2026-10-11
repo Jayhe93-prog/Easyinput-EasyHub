@@ -11,7 +11,7 @@
  *
  * 全程不烧录、不改固件，硬件一个字节都没动。
  */
-const { app, BrowserWindow, globalShortcut, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, globalShortcut, ipcMain, shell, clipboard } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
@@ -84,6 +84,13 @@ function dispatch(keyId, keyDef) {
     } else if (action.type === 'url') {
       shell.openExternal(action.target);
       log(`${keyId} · ${label} → ${action.target}`);
+    } else if (action.type === 'clipboard') {
+      // 「无输入框兜底」：目标软件没有输入框、也没有可驱动的通道时，
+      // 不硬把内容塞进去，改成把准备好的文本写进系统剪贴板，用户切过去 Ctrl+V 即可。
+      const text = action.text || '';
+      clipboard.writeText(text);
+      const preview = text.replace(/\s+/g, ' ').slice(0, 18);
+      log(`${keyId} · ${label} → 已复制到剪贴板（${text.length} 字）：${preview}${text.length > 18 ? '…' : ''}`);
     } else if (action.type === 'keys') {
       // 向"内嵌页面"注入键盘事件。
       // 为什么不用系统级合成按键：浏览器会忽略 PowerShell SendKeys 打进来的合成输入（实测无效）。

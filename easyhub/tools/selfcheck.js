@@ -23,14 +23,31 @@ doc.scenes.forEach((s, i) => {
 });
 console.log(`   默认场景：${doc.active} ${mark(doc.scenes.some((s) => s.id === doc.active))}`);
 
-console.log('\n== 3. 动作目标是否真实存在 ==');
+console.log('\n== 3. 动作目标检查 ==');
 doc.scenes.forEach((s) => {
   Object.entries(s.keys || {}).forEach(([keyId, def]) => {
-    if (!def.action) return;
-    const t = def.action.target;
-    const ok = fs.existsSync(t);
+    const act = def.action;
+    if (!act) return;
+    const type = act.type;
+    let ok, detail;
+    if (type === 'run' || type === 'open') {
+      ok = fs.existsSync(act.target);
+      detail = act.target;
+    } else if (type === 'url') {
+      ok = /^https?:\/\//i.test(act.target || '');
+      detail = act.target;
+    } else if (type === 'keys') {
+      ok = !!act.code;
+      detail = `code=${act.code}`;
+    } else if (type === 'clipboard') {
+      ok = typeof act.text === 'string' && act.text.length > 0;
+      detail = `text ${(act.text || '').length} 字`;
+    } else {
+      ok = false;
+      detail = `未知动作类型 ${type}`;
+    }
     if (!ok) bad++;
-    console.log(`   [${ok ? '✓' : '✗ 缺失'}] ${s.name} / ${keyId} -> ${def.action.type}: ${t}`);
+    console.log(`   [${ok ? '✓' : '✗ 缺失'}] ${s.name} / ${keyId} -> ${type}: ${detail}`);
   });
 });
 
