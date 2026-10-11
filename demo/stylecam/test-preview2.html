@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>预览整图展示验证</title>
+<style>
+  body { margin: 0; background: #f2f4f7; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+  h1 { font-size: 16px; margin: 14px 18px 4px; }
+  .note { font-size: 12px; color: #8a919c; margin: 0 18px 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 20px; padding: 0 18px 24px; }
+  .cell { width: 320px; }
+  .cell .cap { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #2b2f36; }
+  .frame { width: 320px; height: 320px; border-radius: 14px; overflow: hidden; border: 1px solid #e8ebef; background: #fff; display: flex; align-items: center; justify-content: center; }
+  .frame img { max-width: 100%; max-height: 100%; }
+</style>
+</head>
+<body>
+<h1>预览卡 = 整图完整展示（无圆圈）</h1>
+<p class="note">makeStyleCard 现在不再圆形裁切：素材全身完整显示在风格背景上，仅底部保留风格名标题条。</p>
+<div class="row" id="row"></div>
+<script src="js/styles.js"></script>
+<script>
+var SC = window.StyleCam;
+var knit = SC.styleById('knit');
+var row = document.getElementById('row');
+function cell(title, canvasOrImg) {
+  var c = document.createElement('div'); c.className = 'cell';
+  var cap = document.createElement('div'); cap.className = 'cap'; cap.textContent = title;
+  var f = document.createElement('div'); f.className = 'frame';
+  var im = document.createElement('img');
+  im.src = (canvasOrImg instanceof HTMLCanvasElement) ? canvasOrImg.toDataURL('image/png') : canvasOrImg;
+  f.appendChild(im);
+  c.appendChild(cap); c.appendChild(f); row.appendChild(c);
+}
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+function drawCharacter(ctx, w, h) {
+  var cx = w * 0.16, baseY = h * 0.62, s = h * 0.28;
+  ctx.fillStyle = '#3a3f4a';
+  roundRect(ctx, cx - s * 0.45, baseY - s * 0.15, s * 0.9, s * 0.75, s * 0.18); ctx.fill();
+  ctx.fillStyle = '#2c313a';
+  ctx.fillRect(cx - s * 0.38, baseY + s * 0.55, s * 0.28, s * 0.3);
+  ctx.fillRect(cx + s * 0.1, baseY + s * 0.55, s * 0.28, s * 0.3);
+  ctx.fillStyle = '#ffb183';
+  ctx.beginPath(); ctx.arc(cx + s * 0.02, baseY - s * 0.5, s * 0.22, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#4dd8d0';
+  roundRect(ctx, cx - s * 0.42, baseY - s * 0.12, s * 0.84, s * 0.1, 4); ctx.fill();
+  ctx.fillStyle = '#3a3f4a';
+  ctx.fillRect(cx - s * 0.62, baseY - s * 0.05, s * 0.2, s * 0.3);
+  ctx.fillRect(cx + s * 0.42, baseY - s * 0.05, s * 0.2, s * 0.3);
+}
+
+/* A: 竖版全身照（720×1280 不透明） */
+var a = document.createElement('canvas'); a.width = 720; a.height = 1280;
+var ac = a.getContext('2d');
+var ag = ac.createLinearGradient(0, 0, 720, 1280);
+ag.addColorStop(0, '#1d2430'); ag.addColorStop(1, '#0e1320');
+ac.fillStyle = ag; ac.fillRect(0, 0, 720, 1280);
+ac.fillStyle = '#4dd8d0'; ac.globalAlpha = .5;
+ac.fillRect(60, 60, 600, 14); ac.fillRect(60, 60, 14, 1160); ac.globalAlpha = 1;
+drawCharacter(ac, 720, 1280);
+var aURL = a.toDataURL('image/png');
+
+/* B: 透明抠图（900×1400，四周留白） */
+var b = document.createElement('canvas'); b.width = 900; b.height = 1400;
+var bc = b.getContext('2d');
+drawCharacter(bc, 900, 1400);
+var bURL = b.toDataURL('image/png');
+
+SC.makeStyleCard(knit, 50, aURL).then(function (c1) { cell('竖版全身照 → 预览卡', c1); });
+SC.makeStyleCard(knit, 50, bURL).then(function (c2) { cell('透明抠图 → 预览卡', c2); });
+</script>
+</body>
+</html>

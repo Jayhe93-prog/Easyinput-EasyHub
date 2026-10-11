@@ -1,0 +1,74 @@
+{
+  "note": "场景表是纯数据：同一排物理键在不同场景下含义不同。运行时换表不换逻辑（对应课程说的『抽象成方法』）。",
+  "active": "desktop",
+  "scenes": [
+    {
+      "id": "desktop",
+      "name": "桌面整理",
+      "desc": "用实体键操作桌面文件（--run 命令行静默调用）",
+      "keys": {
+        "KEY1": { "label": "打开整理工具", "action": { "type": "run", "target": "E:/TRAE SOLO CN/ModularData/ai-agent/work-mode-projects/6a8ee10edb262ac3658af0ca/桌面整理工具/一键桌面整理.exe", "args": [] } },
+        "KEY2": { "label": "静默整理演示目录", "action": { "type": "run", "target": "E:/TRAE SOLO CN/ModularData/ai-agent/work-mode-projects/6a8ee10edb262ac3658af0ca/桌面整理工具/一键桌面整理.exe", "args": ["--run", "C:/Users/ASUS/Documents/Trae-CN/temp_20261010_01/easyhub/demo-desktop"] } },
+        "KEY3": { "label": "按日期整理演示目录", "action": { "type": "run", "target": "E:/TRAE SOLO CN/ModularData/ai-agent/work-mode-projects/6a8ee10edb262ac3658af0ca/桌面整理工具/一键桌面整理.exe", "args": ["--run", "C:/Users/ASUS/Documents/Trae-CN/temp_20261010_01/easyhub/demo-desktop", "--date"] } },
+        "KEY4": { "label": "打开演示目录", "action": { "type": "open", "target": "C:/Users/ASUS/Documents/Trae-CN/temp_20261010_01/easyhub/demo-desktop" } },
+        "KEY5": { "label": "打开桌面", "action": { "type": "open", "target": "C:/Users/ASUS/Desktop" } },
+        "KEY6": { "label": "（备用）" },
+        "KEY7": { "label": "（备用）" },
+        "KEY8": { "label": "（备用）" }
+      }
+    },
+    {
+      "id": "dj",
+      "name": "DJ 台",
+      "desc": "唤起 EasyInput 网页版 DJ 控制台（3D 键帽皮肤）",
+      "keys": {
+        "KEY1": { "label": "打开 DJ 控制台", "action": { "type": "open", "target": "E:/TRAE SOLO CN/ModularData/ai-agent/work-mode-projects/6a958e1c731485629c578c0b/dj-console/EasyInput-DJ Console.html" } },
+        "KEY2": { "label": "（备用）" },
+        "KEY3": { "label": "（备用）" },
+        "KEY4": { "label": "（备用）" },
+        "KEY5": { "label": "（备用）" }
+      }
+    },
+    {
+      "id": "stylecam",
+      "name": "StyleCam",
+      "desc": "8 键满配（节奏分区方案）：切到本场景会自动打开内嵌页面并切到「节奏分区方案」，7 个实体键直接对应它的 7 个动作",
+      "embed": "E:/TRAE SOLO CN/ModularData/ai-agent/work-mode-projects/6abf39a60a2335814adf4a23/stylecam/raccoon-stylecam.html",
+      "setupJS": "(function(){var t=document.getElementById('tutorialModal');if(t&&!t.hidden){var tc=document.getElementById('btnCloseTutorial');if(tc)tc.click();}var b=document.getElementById('btnScheme');if(b)b.click();var s=document.getElementById('btnSwitchScheme');if(s)s.click();var c=document.getElementById('btnCloseScheme');if(c)c.click();})()",
+      "keys": {
+        "KEY1": { "label": "生成", "action": { "type": "keys", "code": "Digit1" } },
+        "KEY2": { "label": "查看", "action": { "type": "keys", "code": "Digit2" } },
+        "KEY3": { "label": "保存", "action": { "type": "keys", "code": "Digit3" } },
+        "KEY4": { "label": "收起", "action": { "type": "keys", "code": "Digit4" } },
+        "KEY5": { "label": "对比", "action": { "type": "keys", "code": "Digit5" } },
+        "KEY6": { "label": "灵感", "action": { "type": "keys", "code": "Digit6" } },
+        "KEY7": { "label": "重置", "action": { "type": "keys", "code": "Digit7" } },
+        "KEY8": { "label": "（节奏分区方案下留空）" }
+      }
+    },
+    {
+      "id": "radio",
+      "name": "任务电台",
+      "desc": "唤起 Trae 任务电台",
+      "keys": {
+        "KEY1": { "label": "启动电台", "action": { "type": "run", "target": "E:/TRAE SOLO CN/ModularData/ai-agent/work-mode-projects/6ac6e7541ee55cff46396ef0/codex-radio/P7_trae/dist/TraeRadio.exe", "args": [] } },
+        "KEY2": { "label": "（备用）" },
+        "KEY3": { "label": "（备用）" },
+        "KEY4": { "label": "（备用）" },
+        "KEY5": { "label": "（备用）" }
+      }
+    },
+    {
+      "id": "pet",
+      "name": "桌宠",
+      "desc": "唤起浣总桌宠",
+      "keys": {
+        "KEY1": { "label": "启动桌宠", "action": { "type": "run", "target": "E:/TRAE SOLO CN/ModularData/ai-agent/work-mode-projects/6a9ac8b70b064143c7560d5f/raccoon-pet/成品/浣总桌宠-新动画版.exe", "args": [] } },
+        "KEY2": { "label": "（备用）" },
+        "KEY3": { "label": "（备用）" },
+        "KEY4": { "label": "（备用）" },
+        "KEY5": { "label": "（备用）" }
+      }
+    }
+  ]
+}

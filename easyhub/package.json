@@ -1,0 +1,11 @@
+{
+  "name": "easyhub",
+  "version": "0.1.0",
+  "description": "EasyHub · 场景控制台：用 EasyInput 实体按键驱动多软件场景（第八课大作业）",
+  "main": "main.js",
+  "author": "Jayhe93",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  }
+}

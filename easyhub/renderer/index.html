@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<title>EasyHub · 场景控制台</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">EASY<b>HUB</b><span class="sub">场景控制台</span></div>
+    <div class="head-right">
+      <span class="scene-tag" id="sceneTag">—</span>
+      <button id="btnReload" class="ghost">重新载入配置</button>
+      <button id="btnQuit" class="ghost danger">退出</button>
+    </div>
+  </header>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="center-banner" id="centerBanner">
+    场景台已开启 · 按 <b>KEY1–KEY8</b> 选场景，再按<b>旋钮</b>退出
+  </div>
+
+  <div class="device">
+    <div class="keys" id="keys"></div>
+    <div class="knob-wrap">
+      <div class="knob" id="knob"><i></i></div>
+      <div class="knob-cap">旋钮<br><span>短按 = 场景台</span></div>
+    </div>
+  </div>
+
+  <div class="hint" id="hint"></div>
+
+  <section class="logs">
+    <div class="logs-head">运行日志</div>
+    <ul id="logs"></ul>
+  </section>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

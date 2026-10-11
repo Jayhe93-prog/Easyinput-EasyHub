@@ -1,0 +1,42 @@
+{
+  "note": "物理键 -> 板子实际发送的键（Electron Accelerator 写法）。这是整个控制台映射表的【事实源】：在上位机里改键后，必须回填这里。",
+  "chosen_plan": "B 计划（组合键）：Ctrl+Alt+Shift+1..9。三修饰键 + 数字，本机几乎不可能误触发，且全部是物理存在的键，上位机录入框能直接录进去。",
+  "verified": "2026-10-11 真机实测通过：按键码检测器捕获 ControlLeft+ShiftLeft+AltLeft+Digit1；EasyHub 日志确认 9 个热键注册成功，五个场景切换与动作执行均正常。",
+  "keys": {
+    "KEY1": "Ctrl+Alt+Shift+1",
+    "KEY2": "Ctrl+Alt+Shift+2",
+    "KEY3": "Ctrl+Alt+Shift+3",
+    "KEY4": "Ctrl+Alt+Shift+4",
+    "KEY5": "Ctrl+Alt+Shift+5",
+    "KEY6": "Ctrl+Alt+Shift+6",
+    "KEY7": "Ctrl+Alt+Shift+7",
+    "KEY8": "Ctrl+Alt+Shift+8",
+    "KNOB": "Ctrl+Alt+Shift+9"
+  },
+  "current_board_config": {
+    "note": "截图实测：板子改键前的出厂配置（2026-10-10），留作对照记录。",
+    "KEY1": "语音输入",
+    "KEY2": "撤销 Ctrl+Z",
+    "KEY3": "语音编辑",
+    "KEY4": "退格",
+    "KEY5": "全选 Ctrl+A",
+    "KEY6": "复制 Ctrl+C",
+    "KEY7": "粘贴 Ctrl+V",
+    "KEY8": "TRAE SOLO CN",
+    "KNOB": "短按=回车"
+  },
+  "alternative_f13_set": {
+    "note": "A 计划（备用，未采用）：改用 F13–F21。F13–F24 是标准 USB HID 键码，笔记本没有物理键能触发它们，天然零冲突；但上位机录入框要靠手按录入，本机按不出 F13，需用脚本模拟发送才能录，较麻烦。",
+    "keys": {
+      "KEY1": "F13",
+      "KEY2": "F14",
+      "KEY3": "F15",
+      "KEY4": "F16",
+      "KEY5": "F17",
+      "KEY6": "F18",
+      "KEY7": "F19",
+      "KEY8": "F20",
+      "KNOB": "F21"
+    }
+  }
+}

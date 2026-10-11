@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleCam 风格调色盘</title>
+<link rel="stylesheet" href="css/style.css?v=20261002n">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" fill="#FF8A50"/>
+      <circle cx="16" cy="16" r="9" fill="#FFD9A8"/>
+      <circle cx="16" cy="16" r="4.5" fill="#FFFFFF"/>
+    </svg>
+    <h1>StyleCam <span>风格调色盘</span></h1>
+  </div>
+  <div class="topbar-right">
+    <span id="demoBadge" class="badge badge-local">本地演示</span>
+    <button id="btnHelp" class="btn btn-ghost" type="button">使用帮助</button>
+    <button id="btnScheme" class="btn btn-scheme" type="button">
+      <span class="scheme-dot" id="schemeDot"></span>
+      <span id="schemeName">课程标准方案</span>
+      <span class="caret">▾</span>
+    </button>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- 状态条 -->
+  <div class="status-bar" id="statusBar">
+    <span class="status-text" id="statusText">放入素材，开始创作</span>
+    <span class="status-meta" id="statusMeta"></span>
+  </div>
+
+  <!-- ============ 素材库 ============ -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2>素材库</h2>
+      <button id="btnSample" class="btn btn-sample" type="button">
+        <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true">
+          <path d="M10 2l2.2 4.9L17.5 7.6l-3.8 3.6.9 5.2L10 14l-4.6 2.4.9-5.2L2.5 7.6l5.3-.7z" fill="currentColor"/>
+        </svg>
+        没有图片？用内置示例素材试玩
+      </button>
+    </div>
+    <div class="material-row">
+      <label class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+        <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true">
+          <rect x="8" y="6" width="24" height="28" rx="4" fill="none" stroke="#FF8A50" stroke-width="2.4"/>
+          <circle cx="20" cy="17" r="4.4" fill="none" stroke="#FF8A50" stroke-width="2.4"/>
+          <path d="M10 27l7-7 6 6 4-4 5 5" fill="none" stroke="#FF8A50" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <div class="upload-text"><b>放入素材</b><span>点击或拖拽图片（支持多图）</span></div>
+      </label>
+      <div class="thumb-strip" id="materialStrip"></div>
+    </div>
+  </section>
+
+  <!-- ============ 风格画廊 ============ -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2>风格画廊</h2>
+      <span class="panel-hint">点选风格，画布背景与预览会同步切换</span>
+    </div>
+    <div class="style-gallery" id="styleGallery"></div>
+  </section>
+
+  <!-- ============ 创作台 ============ -->
+  <div class="create-row">
+    <!-- 画布：素材 + 所选风格的背景 -->
+    <div class="stage" id="stage">
+      <div class="stage-inner" id="stageInner">
+        <img class="stage-img" id="stageImg" alt="素材展示">
+        <span class="stage-placeholder" id="stagePlaceholder">素材完整展示</span>
+      </div>
+      <span class="stage-style-tag" id="stageStyleTag">毛线旅行家</span>
+    </div>
+
+    <!-- 操作与预览 -->
+    <div class="side-panel">
+      <div class="control-card">
+        <button id="btnGenerate" class="btn-generate-circle" type="button" disabled>
+          <span class="gen-text">生成</span>
+        </button>
+        <div class="control-fields">
+          <div class="strength-box">
+            <span class="strength-label">创意强度</span>
+            <div class="strength-track" id="strengthTrack"><div class="strength-fill" id="strengthFill"></div><div class="strength-knob" id="strengthKnob"></div></div>
+            <span class="strength-value" id="strengthValue">中</span>
+          </div>
+          <div class="style-box">
+            <span class="style-label">当前风格</span>
+            <span class="style-name" id="styleName">毛线旅行家</span>
+            <span class="style-index" id="styleIndex">1 / 11</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="printer" id="printer">
+        <div class="printer-head">
+          <span class="printer-title">StyleCam 创意预览</span>
+          <span class="printer-state" id="printerState">待机</span>
+        </div>
+        <div class="printer-window" id="printerWindow">
+          <div class="preview-empty" id="previewEmpty"><span>等待素材，旋钮即将转动</span></div>
+          <img class="preview-img" id="previewImg" alt="预览">
+          <span class="preview-style-tag" id="previewStyleTag"></span>
+          <span class="preview-strength" id="previewStrength"></span>
+          <canvas class="fx-canvas" id="fxCanvas" hidden></canvas>
+        </div>
+        <div class="printer-slot" id="printerSlot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 出纸区 ============ -->
+  <div class="paper-area" id="paperArea">
+    <div class="paper" id="paper">
+      <img class="paper-img" id="paperImg" alt="作品">
+      <div class="paper-actions" id="paperActions">
+        <button class="btn btn-sm" data-act="save">保存</button>
+        <button class="btn btn-sm" data-act="collapse">收起</button>
+        <button class="btn btn-sm" data-act="compare">对比</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 作品区（画廊底部） ============ -->
+  <section class="panel works-panel">
+    <div class="panel-head">
+      <h2>作品区</h2>
+      <span class="panel-hint">生成的作品会自动归档在这里，点击卡片可重新查看</span>
+    </div>
+    <div class="works-grid" id="worksGrid"></div>
+  </section>
+</main>
+
+<!-- ============ 设备栏（EasyInput 形态：2×4 键阵 + 右侧旋钮） ============ -->
+<footer class="device-bar">
+  <div class="keys-zone" id="keysZone"></div>
+
+  <div class="knob-zone">
+    <div class="knob" id="knob">
+      <div class="knob-rim"></div>
+      <div class="knob-cap" id="knobCap">
+        <span class="knob-pointer"></span>
+      </div>
+      <button class="knob-hit knob-left" data-knob="left" title="逆时针旋转"></button>
+      <button class="knob-hit knob-right" data-knob="right" title="顺时针旋转"></button>
+      <button class="knob-hit knob-press" data-knob="press" title="按下旋钮"></button>
+    </div>
+    <div class="knob-hint">
+      <span class="hint-rotate">旋转 · 探索</span>
+      <span class="hint-press">按压 · 确认</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ 方案配置面板 ============ -->
+<div class="modal-mask" id="schemeModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <h2>按键方案配置</h2>
+      <button class="btn btn-ghost" id="btnCloseScheme" type="button">关闭</button>
+    </div>
+    <p class="modal-sub">页面监听普通键盘事件：S1–S8 对应数字键 1–8，旋钮对应方向键，旋钮短按对应回车。</p>
+    <div class="scheme-table-wrap">
+      <table class="scheme-table">
+        <thead><tr><th></th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th><th>S6</th><th>S7</th><th>S8</th><th>旋钮旋转</th><th>旋钮短按</th></tr></thead>
+        <tbody id="schemeTableBody"></tbody>
+      </table>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-primary" id="btnSwitchScheme" type="button">切换到另一方案</button>
+      <span class="modal-note" id="schemeNote"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 灵感卡 ============ -->
+<div class="modal-mask" id="inspireModal" hidden>
+  <div class="modal modal-inspire">
+    <div class="modal-head">
+      <h2>AI 灵感（本地演示）</h2>
+      <button class="btn btn-ghost" id="btnCloseInspire" type="button">关闭</button>
+    </div>
+    <div class="inspire-style-row">
+      <span class="inspire-style-label">风格</span>
+      <div class="inspire-select" id="inspireSelect">
+        <button class="inspire-select-btn" id="inspireStyleBtn" type="button">毛线旅行家</button>
+        <ul class="inspire-select-list" id="inspireStyleList" hidden></ul>
+      </div>
+      <span class="inspire-style-hint" id="inspireStyleHint"></span>
+    </div>
+    <ul class="inspire-list" id="inspireList"></ul>
+    <p class="modal-note">灵感为预设文案，不依赖 AI 服务。滚轮或旋钮左右切换风格，短按回车确认，其他键关闭。</p>
+  </div>
+</div>
+
+<!-- ============ 使用引导 ============ -->
+<div class="modal-mask" id="tutorialModal" hidden>
+  <div class="modal modal-tutorial">
+    <div class="modal-head">
+      <h2>三步开始创作</h2>
+      <button class="btn btn-ghost" id="btnCloseTutorial" type="button">跳过</button>
+    </div>
+    <ol class="tutorial-steps">
+      <li>
+        <b>1 · 放入素材</b>
+        <span>点顶部「放入素材」选一张照片，或直接拖进虚线框；没有图片就点「内置示例素材」立即试玩。</span>
+      </li>
+      <li>
+        <b>2 · 点选风格</b>
+        <span>在风格画廊点卡片（或方向键 ← → / 旋钮两侧）切换风格，画布背景会跟着变；数字键 1–8 对应 S1–S8。</span>
+      </li>
+      <li>
+        <b>3 · 一键生成</b>
+        <span>调好强度后按回车或点圆形「生成」按钮，作品从底部出纸；按 3 保存、4 收起进入创意显示。</span>
+      </li>
+    </ol>
+    <p class="modal-note">无真实 AI 时页面会标注「本地演示」：生成播放风格样片，创意显示（点阵/像素/字符/显影窗口）对图片做本地实时处理。</p>
+    <div class="modal-foot">
+      <button class="btn btn-primary" id="btnStartTutorial" type="button">开始创作</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Toast ============ -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="js/styles.js?v=20261002n"></script>
+<script src="js/storage.js?v=20261002n"></script>
+<script src="js/canvas-fx.js?v=20261002n"></script>
+<script src="js/input.js?v=20261002n"></script>
+<script src="js/app.js?v=20261002n"></script>
+</body>
+</html>
+
+
+
