@@ -33,6 +33,7 @@
 | ![证据1](docs/evidence/evidence-1.png) | 控制台界面与运行日志：同排 8 键在 StyleCam 场景下映射为「生成 / 查看 / 保存 / 收起 / 对比 / 灵感 / 重置 / 留空」；日志确认「已注册 9 个板子专用热键」 |
 | ![证据2](docs/evidence/evidence-2.png) | 旋钮短按**真机触发**场景台（日志行无「窗口操作」后缀，只可能来自板子发来的热键）；切场景自动打开内嵌页并切到「节奏分区方案」 |
 | ![证据3](docs/evidence/evidence-3.png) | 端到端闭环：按下实体键 `KEY6` → 日志「KEY6 · 灵感 → 向内嵌页面注入按键 Digit6」→ 网页弹出「AI 灵感」面板 |
+| ![证据4](docs/evidence/evidence-4.png) | **剪贴板兜底**实测：切到第 6 个场景「公众号工作台」后，实体键 `KEY1`/`KEY2`/`KEY3` 依次触发「已复制到剪贴板（93 / 62 / 31 字）」—— 目标软件没有可驱动通道，按键先把文案备好，切过去 `Ctrl+V` 即可 |
 
 实测键码：`KEY1` = `ControlLeft` → `ShiftLeft` → `AltLeft` → `Digit1`。
 
